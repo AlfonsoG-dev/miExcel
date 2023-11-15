@@ -5,7 +5,7 @@ import java.io.FileReader;
 class miExcel {
     public static void main(String[] args) {
         String path = "./docs/miExcelFile.txt";
-        getColumns(path);
+        getRowsOfColumn(path, "<A>");
     }
     static String readFileText(String filePath) {
         String fileLines = "";
@@ -34,6 +34,9 @@ class miExcel {
         }
         return fileLines;
     }
+    /**
+     * columns declare on top of the file 
+     */
     static String getColumns(String filePath) {
         String[] fileLines = readFileText(filePath).split("\n");
         String columns ="";
@@ -41,7 +44,22 @@ class miExcel {
         for(String c: co) {
             columns += c + "\n";
         }
-        System.out.println(columns);
         return columns;
+    }
+    /**
+     * last column have the operations between prev columns
+     */
+    static String getRowsOfColumn(String filePath, String column) {
+        String[] fileLines = readFileText(filePath).split("\n");
+        String rows = "";
+        String[] columns = fileLines[0].split("\\.");
+        for(int i=0; i<columns.length; ++i) {
+            if(columns[i].equals(column)) {
+                for(int j=1; j<fileLines.length-1; ++j) {
+                    rows += fileLines[j].split("\\.")[i]  + "\n";
+                }
+            }
+        }
+        return rows;
     }
 }
