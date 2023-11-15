@@ -5,7 +5,7 @@ import java.io.FileReader;
 class miExcel {
     public static void main(String[] args) {
         String path = "./docs/miExcelFile.txt";
-        getRowsOfColumn(path, "<A>");
+        getOperations(path);
     }
     static String readFileText(String filePath) {
         String fileLines = "";
@@ -55,11 +55,52 @@ class miExcel {
         String[] columns = fileLines[0].split("\\.");
         for(int i=0; i<columns.length; ++i) {
             if(columns[i].equals(column)) {
-                for(int j=1; j<fileLines.length-1; ++j) {
+                for(int j=1; j<fileLines.length; ++j) {
                     rows += fileLines[j].split("\\.")[i]  + "\n";
                 }
             }
         }
         return rows;
+    }
+    /**
+     */
+    static String getOperations(String filePath) {
+        String operation = "";
+        String[] fileLines = readFileText(filePath).split("\n");
+        for(int i=1; i<fileLines.length; ++i) {
+            String[] rows = fileLines[i].split("\\.");
+            String[] op = rows[rows.length-1].replaceAll("[<.>=]", "").split("");
+            String[] rowsOfColumn = getRowsOfColumn(filePath, "<" + op[0] + ">").split("\n");
+            String[] rowsOfColumn2 = getRowsOfColumn(filePath, "<" + op[3] + ">").split("\n");
+            int position = Integer.parseInt(op[1])-1;
+            int position2 = Integer.parseInt(op[op.length-1])-1;
+            String operador = op[2];
+            switch(operador) {
+                case "+":
+                    System.out.print(rowsOfColumn[position] + operador + rowsOfColumn2[position2] + ":");
+                    System.out.println(Integer.parseInt(rowsOfColumn[position].replaceAll("[<.>]", "")) + 
+                            Integer.parseInt(rowsOfColumn2[position2].replaceAll("[<.>]", "")));
+                    break;
+                case "-":
+                    System.out.print(rowsOfColumn[position] + operador + rowsOfColumn2[position2] + ":");
+                    System.out.println(Integer.parseInt(rowsOfColumn[position].replaceAll("[<.>]", "")) - 
+                            Integer.parseInt(rowsOfColumn2[position2].replaceAll("[<.>]", "")));
+                    break;
+                case "*":
+                    System.out.print(rowsOfColumn[position] + operador + rowsOfColumn2[position2] + ":");
+                    System.out.println(Integer.parseInt(rowsOfColumn[position].replaceAll("[<.>]", "")) * 
+                            Integer.parseInt(rowsOfColumn2[position2].replaceAll("[<.>]", "")));
+                    break;
+                case "/":
+                    System.out.print(rowsOfColumn[position] + operador + rowsOfColumn2[position2] + ":");
+                    System.out.println(Integer.parseInt(rowsOfColumn[position].replaceAll("[<.>]", "")) / 
+                            Integer.parseInt(rowsOfColumn2[position2].replaceAll("[<.>]", "")));
+                    break;
+                default:
+                    System.out.println("no operation know");
+                    break;
+            }
+        }
+        return operation;
     }
 }
