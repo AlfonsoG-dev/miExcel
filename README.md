@@ -2,6 +2,8 @@
 
 >- Mini excel proyect base on [tsoding-miniExcel](https://www.youtube.com/watch?v=HCAgvKQDJng)
 >- Attemp to replicate the proyect in java
+>- only works with 2 columns for the data and 1 for the operations
+>>- the operations can only be 1 between 2 rows of the columns
 
 ### Example
 >- with numbers
