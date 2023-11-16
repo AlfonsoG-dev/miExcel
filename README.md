@@ -2,8 +2,8 @@
 
 >- Mini excel proyect base on [tsoding-miniExcel](https://www.youtube.com/watch?v=HCAgvKQDJng)
 >- Attemp to replicate the proyect in java
->- only works with 2 columns for the data and 1 for the operations
->>- the operations can only be 1 between 2 rows of the columns
+>>- for now only work with the same operator in the line
+>>- and can compute operations with 2 or more columns
 
 ### Example
 >- with numbers
@@ -33,16 +33,15 @@
 >>- `<12>-<10>-<=A4*B1>`
 
 ## Issues
->- for now when you have 2 or more operation s between columns the program separates in pices of 2
+>- for now when you have more than 2 columns to compute only works if the operation is the same for all the columns
 ```console
-<12>-<10>-<20>-<=A1*B1+C1>
+<12>-<10>-<20>-<=A1+B1+C1>
 ```
->>- this will bee partitioned to secuence of two
+>>- if the operation is not the same it generates an error
 ```console
-peration  = A1*B1
-operation = B1+C1
+java.lang.NumberFormatException: For input string: "*"
 ```
->>- this is an attemp to compute more than 2 columns at the same time
+>>- this is an attemp to compute more than 2 columns
 
 
 ## TODO's
