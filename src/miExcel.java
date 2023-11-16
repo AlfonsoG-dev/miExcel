@@ -5,7 +5,7 @@ import java.io.FileReader;
 class miExcel {
     public static void main(String[] args) {
         String path = "./docs/miExcelFile.txt";
-        getOperations(path);
+        performOperations(path);
     }
     static String readFileText(String filePath) {
         String fileLines = "";
@@ -69,7 +69,23 @@ class miExcel {
         String[] fileLines = readFileText(filePath).split("\n");
         for(int i=1; i<fileLines.length; ++i) {
             String[] rows = fileLines[i].split("\\.");
-            String[] op = rows[rows.length-1].replaceAll("[<.>=]", "").split("");
+            String row = rows[rows.length-1].replaceAll("[<.>=]", "");
+            String[] op = row.split("");
+            for(int o=0; o<op.length; ++o) {
+                if(op[o].matches("[*+-/]")) {
+                    operation += op[o-2].concat(op[o-1]) + op[o] + op[o+1].concat(op[o+2]) + "\n";
+                }
+            }
+        }
+        return operation;
+    }
+    /**
+     */
+    static void performOperations(String filePath) {
+        String[] operations = getOperations(filePath).split("\n");
+        for(int i=0; i<operations.length; ++i) {
+            System.out.print(operations[i] + " == ");
+            String[] op = operations[i].split("");
             String[] rowsOfColumn = getRowsOfColumn(filePath, "<" + op[0] + ">").split("\n");
             String[] rowsOfColumn2 = getRowsOfColumn(filePath, "<" + op[3] + ">").split("\n");
             int position = Integer.parseInt(op[1])-1;
@@ -101,6 +117,5 @@ class miExcel {
                     break;
             }
         }
-        return operation;
     }
 }
