@@ -16,7 +16,7 @@
 <15>-<3>-<=A2/B2>
 ```
 
->- with text
+>- with text: not implemented yet
 ```console
 <A>-<B>-<C>
 <alf>-<sebas>-<=A2+B2>
@@ -31,6 +31,18 @@
 - [x] numeric operation in lineal order
 - [x] numeric operation between columns not matter the row
 >>- `<12>-<10>-<=A4*B1>`
+
+## Issues
+>- for now when you have 2 or more operation s between columns the program separates in pices of 2
+```console
+<12>-<10>-<20>-<=A1*B1+C1>
+```
+>>- this will bee partitioned to secuence of two
+```console
+peration  = A1*B1
+operation = B1+C1
+```
+>>- this is an attemp to compute more than 2 columns at the same time
 
 
 ## TODO's
