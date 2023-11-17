@@ -2,6 +2,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 
+import Operations.Operator;
+
 class miExcel {
     static String path = "./docs/miExcelFile.txt";
     public static void main(String[] args) {
