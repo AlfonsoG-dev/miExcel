@@ -33,11 +33,19 @@ public record Operator() {
         int res = 0, sum = 0;
         if(sentences.contains("(") && sentences.contains(")")) {
             String[] prioridad = sentences.split("\\(");
-            String another = prioridad[prioridad.length-1].replace(")", "");
-            MenuOperation miMenu = new MenuOperation(fileText, another);
-            sum = miMenu.AssignOperation();
-            if(prioridad[0].contains("+")) {
-                String[] spaces = prioridad[0].replace("+", "").split("");
+            String another = "";
+            for(String p: prioridad) {
+                String[] ap = p.split("\\)");
+                if(ap.length > 1) {
+                    another = ap[1];
+                } else if (ap[0].split("").length <= 3) {
+                    another = ap[0];
+                }
+                MenuOperation miMenu = new MenuOperation(fileText, ap[0]);
+                sum = miMenu.AssignOperation();
+            }
+            if(another.contains("+")) {
+                String[] spaces = another.replace("+", "").split("");
                 String col = spaces[0];
                 int p = Integer.parseInt(spaces[1])-1;
                 String[] rows = getRowsOfColumn(fileText, "<" + col + ">").split("\n");
@@ -61,11 +69,19 @@ public record Operator() {
         int res = 0, mult = 1;
         if(sentences.contains("(") == true && sentences.contains(")")) {
             String[] prioridad = sentences.split("\\(");
-            String another = prioridad[prioridad.length-1].replace(")", "");
-            MenuOperation miMenu = new MenuOperation(fileText, another);
-            mult = miMenu.AssignOperation();
-            if(prioridad[0].contains("*")) {
-                String[] spaces = prioridad[0].replace("*", "").split("");
+            String another = "";
+            for(String p: prioridad) {
+                String[] ap = p.split("\\)");
+                if(ap.length > 1) {
+                    another = ap[1];
+                } else if(ap[0].split("").length <= 3) {
+                    another = ap[0];
+                }
+                MenuOperation miMenu = new MenuOperation(fileText, ap[0]);
+                mult = miMenu.AssignOperation();
+            }
+            if(another.contains("*")) {
+                String[] spaces = another.replace("*", "").split("");
                 String col = spaces[0];
                 int p = Integer.parseInt(spaces[1])-1;
                 String[] rows = getRowsOfColumn(fileText, "<" + col + ">").split("\n");
@@ -91,11 +107,19 @@ public record Operator() {
         String nums = "";
         if(sentences.contains("(") == true && sentences.contains(")") == true) {
             String[] prioridad = sentences.split("\\(");
-            String another = prioridad[prioridad.length-1].replace(")", "");
-            MenuOperation miMenu = new MenuOperation(fileText, another);
-            div = miMenu.AssignOperation();
-            if(prioridad[0].contains("/")) {
-                String[] spaces = prioridad[0].replace("/", "").split("");
+            String another = "";
+            for(String p: prioridad) {
+                String[] ap = p.split("\\)");
+                if(ap.length > 1) {
+                    another = ap[1];
+                } else if(ap[0].split("").length <= 3) {
+                    another = ap[0];
+                }
+                MenuOperation miMenu = new MenuOperation(fileText, ap[0]);
+                div = miMenu.AssignOperation();
+            }
+            if(another.contains("/")) {
+                String[] spaces = another.replace("/", "").split("");
                 String col = spaces[0];
                 int p = Integer.parseInt(spaces[1])-1;
                 String[] rows = getRowsOfColumn(fileText, "<" + col + ">").split("\n");
@@ -123,25 +147,47 @@ public record Operator() {
         return res;
     }
     public static int Restar(String fileText, String sentences) {
-        String[] spaces = sentences.split("\\-");
-        int div = 1;
+        int rest = 1;
         int res = 0;
         String nums = "";
-        for(String s: spaces) {
-            String[] data = s.split("");
-            String co = data[0];
-            int p = Integer.parseInt(data[1])-1;
-            String[] rows = getRowsOfColumn(fileText, "<" + co + ">").split("\n");
-            div = Integer.parseInt(rows[p].replaceAll("[<>]", ""));
-            nums += div + "\n";
+        if(sentences.contains("(") == true && sentences.contains(")") == true) {
+            String[] prioridad = sentences.split("\\(");
+            String another = "";
+            for(String p: prioridad) {
+                String[] ap = p.split("\\)");
+                if(ap.length > 1) {
+                    another = ap[1];
+                } else if(ap[0].split("").length <=3) {
+                    another = ap[0];
+                }
+                MenuOperation miMenu = new MenuOperation(fileText, ap[0]);
+                rest = miMenu.AssignOperation();
+            }
+            if(another.contains("-")) {
+                String[] spaces = another.replace(")", "").split("");
+                String col = spaces[0];
+                int p = Integer.parseInt(spaces[1])-1;
+                String[] rows = getRowsOfColumn(fileText, "<" + col + ">").split("\n");
+                res = Integer.parseInt(rows[p].replaceAll("[<>]", "")) - rest;
+            }
+        } else {
+            String[] spaces = sentences.split("\\-");
+            for(String s: spaces) {
+                String[] data = s.split("");
+                String co = data[0];
+                int p = Integer.parseInt(data[1])-1;
+                String[] rows = getRowsOfColumn(fileText, "<" + co + ">").split("\n");
+                rest = Integer.parseInt(rows[p].replaceAll("[<>]", ""));
+                nums += rest + "\n";
+            }
+            String[] mNums = nums.split("\n");
+            int inicial = 0, siguiente = 0;
+            for(int i=1; i<mNums.length; ++i) {
+                inicial = Integer.parseInt(mNums[0]);
+                siguiente += Integer.parseInt(mNums[i]);
+            }
+            res = inicial - siguiente;
         }
-        String[] mNums = nums.split("\n");
-        int inicial = 0, siguiente = 0;
-        for(int i=1; i<mNums.length; ++i) {
-            inicial = Integer.parseInt(mNums[0]);
-            siguiente += Integer.parseInt(mNums[i]);
-        }
-        res = inicial - siguiente;
         System.out.println(sentences + "=" + res);
         return res;
     }
