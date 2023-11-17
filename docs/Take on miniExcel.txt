@@ -1,0 +1,13 @@
+Take on miniExcel
+
+# dividir las columnas y filas entre:
+- texto 
+- numero 
+- expresion
+>- la expresion es la que posee las operaciones aritmeticas
+>- gemerar la prioridad de las sentencias
+
+# crear las dimensines con la cantidad de rows and columns
+- recorrer las filas y de ellas sacar la cantidad de columnas
+>- las filas tienen el contenido 
+>- las columnas tienen el nombre de la columna

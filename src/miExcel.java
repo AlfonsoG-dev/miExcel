@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 
-import Operations.Operator;
+import Operations.MenuOperation;
 
 class miExcel {
     static String path = "./docs/miExcelFile.txt";
@@ -53,19 +53,17 @@ class miExcel {
             String[] op = row.split("");
             for(int o=0; o<op.length; ++o) {
                 if(op[o].matches("[*]")) {
-                    Operator.Multiplicar(fileText, row);
+                    MenuOperation mio = new MenuOperation(fileText, op[o]);
+                    System.out.println(mio);
                     break;
                 }
                 if(op[o].matches("[\\/]")) {
-                    Operator.Dividir(fileText, row);
                     break;
                 }
                 if(op[o].matches("[+]")) {
-                    Operator.Sumar(fileText, row);
                     break;
                 }
                 if(op[o].matches("[\\-]")) {
-                    Operator.Restar(fileText, row);
                     break;
                 }
             }
