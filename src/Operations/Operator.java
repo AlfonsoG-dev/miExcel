@@ -30,42 +30,36 @@ public record Operator() {
         return rows;
     }
     public static int Sumar(String fileText, String sentences) {
-        int res = 0, sum = 0;
-        if(sentences.contains("(") && sentences.contains(")")) {
-            String[] prioridad = sentences.split("\\(");
-            String another = "";
-            for(String p: prioridad) {
-                String[] ap = p.split("\\)");
-                if(ap.length > 1) {
-                    another = ap[1];
-                } else if (ap[0].split("").length <= 3) {
-                    another = ap[0];
-                } else if(ap[0].split("").length >= 8) {
-                    sum = Sumar(fileText, ap[0]);
-                }
-                sum = new MenuOperation(fileText, ap[0]).AssignOperation();
-            }
-            if(another.contains("+")) {
-                String[] spaces = another.replace("+", "").split("");
-                String col = spaces[0];
-                int p = Integer.parseInt(spaces[1])-1;
-                String[] rows = getRowsOfColumn(fileText, "<" + col + ">").split("\n");
-                sum += Integer.parseInt(rows[p].replaceAll("[<>]", ""));
-                res = sum;
-            }
-        } else if(sentences.length() >= 3) {
-            String[] spaces = sentences.split("\\+");
-            for(String s: spaces) {
-                String[] data = s.split("");
-                String co = data[0];
-                int p = Integer.parseInt(data[1])-1;
-                String[] rows = getRowsOfColumn(fileText, "<" + co + ">").split("\n");
-                sum += Integer.parseInt(rows[p].replaceAll("[<>]", ""));
-                res = sum;
-            }
-        }
-        System.out.println(sentences + "=" + res);
-        return res;
+         int result = 0, sum = 0;
+         if(sentences.contains("(")) {
+             String[] llaves = sentences.split("\\(");
+             for(String p: llaves) {
+                 if(p.contains(")")) {
+                     String[] another = p.split("\\)");
+                     if(another[0].length() > 3) {
+                         sum += new MenuOperation(fileText, another[0]).AssignOperation();
+                     }
+                     if(1 < another.length && another[1].length() >= 3) {
+                         sum += new MenuOperation(fileText, another[1]).AssigOneOperation();
+                     }
+                 } else {
+                     String operar = p.substring(0, p.length()-1);
+                     sum += new MenuOperation(fileText, operar).AssignOperation();
+                 }
+             }
+         } else {
+             String[] spaces = sentences.split("\\+");
+             for(String s: spaces) {
+                 String[] data = s.split("");
+                 String co = data[0];
+                 int p= Integer.parseInt(data[1])-1;
+                 String[] rows = getRowsOfColumn(fileText, "<" + co + ">").split("\n");
+                 sum += Integer.parseInt(rows[p].replaceAll("[<>]", ""));
+             }
+         }
+         result += sum;
+         System.out.println(sentences + "==" + result);
+         return result;
     }
     public static int Multiplicar(String fileText, String sentences) {
         int res = 0, mult = 1;

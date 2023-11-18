@@ -52,6 +52,7 @@ class miExcel {
             String row = rows[rows.length-1].replaceAll("[<.>=]", "");
             String[] op = row.split("");
             for(int o=0; o<op.length; ++o) {
+                /*
                 if(op[o].matches("[*]")) {
                     Operator.Multiplicar(fileText, row);
                     break;
@@ -60,14 +61,19 @@ class miExcel {
                     Operator.Dividir(fileText, row);
                     break;
                 }
+                */
                 if(op[o].matches("[+]")) {
+                    System.out.print("Resultado:" + "\n");
                     Operator.Sumar(fileText, row);
+                    System.out.print("\n");
                     break;
                 }
+                /*
                 if(op[o].matches("[\\-]")) {
                     Operator.Restar(fileText, row);
                     break;
                 }
+                */
             }
         }
         return operation;
