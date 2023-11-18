@@ -117,50 +117,48 @@ public record Operator() {
         return result;
     }
     public static int Restar(String fileText, String sentences) {
-        int rest = 1;
-        int res = 0;
-        String nums = "";
-        if(sentences.contains("(") == true && sentences.contains(")") == true) {
+        int resolve = 0, rest = 0, inicial = 0;
+        if(sentences.contains("(")) {
             String[] prioridad = sentences.split("\\(");
-            String another = "";
             for(String p: prioridad) {
-                String[] ap = p.split("\\)");
-                if(ap.length > 1) {
-                    another = ap[1];
-                } else if(ap[0].split("").length <=3) {
-                    another = ap[0];
-                } else if(ap[0].split("").length >= 8) {
-                    rest = new MenuOperation(fileText, ap[0]).AssignOperation();
+                String[] another = p.split("\\)");
+                if(another[0].length() > 3) {
+                    inicial = new MenuOperation(fileText, another[0]).AssignOperation();
                 }
-                MenuOperation miMenu = new MenuOperation(fileText, ap[0]);
-                rest = miMenu.AssignOperation();
+                if(another[0].length() == 3) {
+                    rest = new MenuOperation(fileText, another[0]).AssigOneOperation();
+                }
+                if(1 < another.length && another[1].length() > 3) {
+                    String operar = another[1].substring(1, another[1].length());
+                    rest -= new MenuOperation(fileText, operar).AssignOperation();
+                }
+                if(1 < another.length && another[1].length() == 3) {
+                    rest -= new MenuOperation(fileText, another[1]).AssigOneOperation();
+                }
             }
-            if(another.contains("-")) {
-                String[] spaces = another.replace(")", "").split("");
-                String col = spaces[0];
-                int p = Integer.parseInt(spaces[1])-1;
-                String[] rows = getRowsOfColumn(fileText, "<" + col + ">").split("\n");
-                res = Integer.parseInt(rows[p].replaceAll("[<>]", "")) - rest;
-            }
+            rest -= inicial;
         } else {
             String[] spaces = sentences.split("\\-");
-            for(String s: spaces) {
+            for(int i=0; i<spaces.length; ++i) {
+                String s = spaces[i];
                 String[] data = s.split("");
                 String co = data[0];
                 int p = Integer.parseInt(data[1])-1;
                 String[] rows = getRowsOfColumn(fileText, "<" + co + ">").split("\n");
-                rest = Integer.parseInt(rows[p].replaceAll("[<>]", ""));
-                nums += rest + "\n";
+                if(sentences.length() > 3) {
+                    if(i == 0) {
+                        inicial = Integer.parseInt(rows[p].replaceAll("[<>]", ""));
+                    } else {
+                        rest = inicial - Integer.parseInt(rows[p].replaceAll("[<>]", ""));
+                        inicial = Integer.parseInt(rows[p].replaceAll("[<>]", ""));;
+                    }
+                } else {
+                    rest = Integer.parseInt(rows[p].replaceAll("[<>]", ""));;
+                }
             }
-            String[] mNums = nums.split("\n");
-            int inicial = 0, siguiente = 0;
-            for(int i=1; i<mNums.length; ++i) {
-                inicial = Integer.parseInt(mNums[0]);
-                siguiente += Integer.parseInt(mNums[i]);
-            }
-            res = inicial - siguiente;
         }
-        System.out.println(sentences + "=" + res);
-        return res;
+        resolve = rest;
+        System.out.println(sentences + "==" + resolve);
+        return resolve;
     }
 }
