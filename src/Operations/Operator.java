@@ -34,18 +34,7 @@ public record Operator() {
          if(sentences.contains("(")) {
              String[] llaves = sentences.split("\\(");
              for(String p: llaves) {
-                 if(p.contains(")")) {
-                     String[] another = p.split("\\)");
-                     if(another[0].length() > 3) {
-                         sum += new MenuOperation(fileText, another[0]).AssignOperation();
-                     }
-                     if(1 < another.length && another[1].length() >= 3) {
-                         sum += new MenuOperation(fileText, another[1]).AssigOneOperation();
-                     }
-                 } else {
-                     String operar = p.substring(0, p.length()-1);
-                     sum += new MenuOperation(fileText, operar).AssignOperation();
-                 }
+                 sum = OperationUtils.setPriorityValueOfSum(fileText, p, sum);
              }
          } else {
              String[] spaces = sentences.split("\\+");
@@ -65,25 +54,8 @@ public record Operator() {
         int res = 0, mult = 1;
         if(sentences.contains("(") == true && sentences.contains(")")) {
             String[] prioridad = sentences.split("\\(");
-            String another = "";
             for(String p: prioridad) {
-                String[] ap = p.split("\\)");
-                if(ap.length > 1) {
-                    another = ap[1];
-                } else if(ap[0].split("").length <= 3) {
-                    another = ap[0];
-                } else if(ap[0].split("").length >= 8) {
-                    mult = new MenuOperation(fileText, ap[0]).AssignOperation();
-                }
-                MenuOperation miMenu = new MenuOperation(fileText, ap[0]);
-                mult = miMenu.AssignOperation();
-            }
-            if(another.contains("*")) {
-                String[] spaces = another.replace("*", "").split("");
-                String col = spaces[0];
-                int p = Integer.parseInt(spaces[1])-1;
-                String[] rows = getRowsOfColumn(fileText, "<" + col + ">").split("\n");
-                res = Integer.parseInt(rows[p].replaceAll("[<>]", "")) * mult;
+                mult = OperationUtils.setPriorityValueOfMult(fileText, p, mult);
             }
         } else {
             String[] spaces = sentences.split("\\*");
@@ -93,10 +65,10 @@ public record Operator() {
                 int p = Integer.parseInt(data[1])-1;
                 String[] rows = getRowsOfColumn(fileText, "<" + co + ">").split("\n");
                 mult *= Integer.parseInt(rows[p].replaceAll("[<>]", ""));
-                res = mult;
             }
         }
-        System.out.println(sentences + "=" + res);
+        res = mult;
+        System.out.println(sentences + "==" + res);
         return res;
     }
     public static float Dividir(String fileText, String sentences) {

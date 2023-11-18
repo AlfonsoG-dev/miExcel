@@ -54,21 +54,22 @@ class miExcel {
             for(int o=0; o<op.length; ++o) {
                 /*
                 if(op[o].matches("[*]")) {
+                    System.out.print("Resultado:" + "\n");
                     Operator.Multiplicar(fileText, row);
                     break;
                 }
+                */
                 if(op[o].matches("[\\/]")) {
                     Operator.Dividir(fileText, row);
                     break;
                 }
-                */
+                /*
                 if(op[o].matches("[+]")) {
                     System.out.print("Resultado:" + "\n");
                     Operator.Sumar(fileText, row);
                     System.out.print("\n");
                     break;
                 }
-                /*
                 if(op[o].matches("[\\-]")) {
                     Operator.Restar(fileText, row);
                     break;
