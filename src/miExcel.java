@@ -57,12 +57,11 @@ class miExcel {
                     Operator.Multiplicar(fileText, row);
                     break;
                 }
-                /*
                 if(op[o].matches("[\\/]")) {
+                    System.out.print("Resultado div :" + "\n");
                     Operator.Dividir(fileText, row);
                     break;
                 }
-                */
                 if(op[o].matches("[+]")) {
                     System.out.print("Resultado sum :" + "\n");
                     Operator.Sumar(fileText, row);
@@ -70,6 +69,7 @@ class miExcel {
                     break;
                 }
                 if(op[o].matches("[\\-]")) {
+                    System.out.print("Resultado rest :" + "\n");
                     Operator.Restar(fileText, row);
                     break;
                 }
