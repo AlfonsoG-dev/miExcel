@@ -2,8 +2,11 @@
 
 >- Mini Excel proyect inspired by [Tsoding-minicel](https://www.youtube.com/watch?v=HCAgvKQDJng)
 >- Attemp to replicate the proyect in java
->>- Can resolve expresions with 2 or more elements
->>- Can resolve expresions with priority
+
+## Features
+- [x] resolves expresions with 2 or more elements
+- [x] resolves expresions with priority
+- [x] resolves expresions with multiples operations
 
 ## Example
 >- executes the normal math operations
