@@ -71,34 +71,50 @@ public record Operator() {
         System.out.println(sentences + "==" + res);
         return res;
     }
-    public static float Dividir(String fileText, String sentences) {
-        int div = 1, inicial = 0;
-        float res = 0;
-        String nums = "";
-        if(sentences.contains("(") == true && sentences.contains(")") == true) {
+    public static double Dividir(String fileText, String sentences) {
+        double result = 0, div = 1, inicial = 0;
+        if(sentences.contains("(")) {
             String[] prioridad = sentences.split("\\(");
             for(String p: prioridad) {
-                div = OperationUtils.setPriorityValueOfDiv(fileText, p, div);
+                String[] another = p.split("\\)");
+                if(another[0].length() > 3) {
+                    inicial = new MenuOperation(fileText, another[0]).AssignOperation();
+                }
+                if(another[0].length() == 3) {
+                    div = new MenuOperation(fileText, another[0]).AssigOneOperation();
+                }
+                if(1 < another.length && another[1].length() > 3) {
+                    String operar = another[1].substring(1, another[1].length());
+                    div /= new MenuOperation(fileText, operar).AssignOperation();
+                }
+                if(1 < another.length && another[1].length() == 3) {
+                    div /= new MenuOperation(fileText, another[1]).AssigOneOperation();
+                }
             }
+            div /= inicial;
         } else {
             String[] spaces = sentences.split("\\/");
-            for(String s: spaces) {
+            for(int i=0; i<spaces.length; ++i) {
+                String s = spaces[i];
                 String[] data = s.split("");
                 String co = data[0];
                 int p = Integer.parseInt(data[1])-1;
                 String[] rows = getRowsOfColumn(fileText, "<" + co + ">").split("\n");
-                nums += Integer.parseInt(rows[p].replaceAll("[<>]", "")) + "\n";
-            }
-            if(spaces.length > 1) {
-                div = OperationUtils.performDiv(nums, inicial);
-            } else {
-                div = Integer.parseInt(nums.split("\n")[0]);
+                if(sentences.length() > 3) {
+                    if(i == 0) {
+                        inicial = Integer.parseInt(rows[p].replaceAll("[<>]", ""));
+                    } else {
+                        div = inicial / Integer.parseInt(rows[p].replaceAll("[<>]", ""));
+                        inicial = Integer.parseInt(rows[p].replaceAll("[<>]", ""));
+                    }
+                } else {
+                    div = Integer.parseInt(rows[p].replaceAll("[<>]", ""));
+                }
             }
         }
-        // TODO: cant calculate the final result if the operation is A1/(C4/B2) => output 3
-        res = div;
-        System.out.println(sentences + "=" + res);
-        return res;
+        result = div;
+        System.out.println(sentences + "==" + result);
+        return result;
     }
     public static int Restar(String fileText, String sentences) {
         int rest = 1;
