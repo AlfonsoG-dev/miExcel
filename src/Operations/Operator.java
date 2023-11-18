@@ -40,18 +40,20 @@ public record Operator() {
                     another = ap[1];
                 } else if (ap[0].split("").length <= 3) {
                     another = ap[0];
+                } else if(ap[0].split("").length >= 8) {
+                    sum = Sumar(fileText, ap[0]);
                 }
-                MenuOperation miMenu = new MenuOperation(fileText, ap[0]);
-                sum = miMenu.AssignOperation();
+                sum = new MenuOperation(fileText, ap[0]).AssignOperation();
             }
             if(another.contains("+")) {
                 String[] spaces = another.replace("+", "").split("");
                 String col = spaces[0];
                 int p = Integer.parseInt(spaces[1])-1;
                 String[] rows = getRowsOfColumn(fileText, "<" + col + ">").split("\n");
-                res = Integer.parseInt(rows[p].replaceAll("[<>]", "")) + sum;
+                sum += Integer.parseInt(rows[p].replaceAll("[<>]", ""));
+                res = sum;
             }
-        } else {
+        } else if(sentences.length() >= 3) {
             String[] spaces = sentences.split("\\+");
             for(String s: spaces) {
                 String[] data = s.split("");
@@ -76,6 +78,8 @@ public record Operator() {
                     another = ap[1];
                 } else if(ap[0].split("").length <= 3) {
                     another = ap[0];
+                } else if(ap[0].split("").length >= 8) {
+                    mult = new MenuOperation(fileText, ap[0]).AssignOperation();
                 }
                 MenuOperation miMenu = new MenuOperation(fileText, ap[0]);
                 mult = miMenu.AssignOperation();
@@ -114,6 +118,8 @@ public record Operator() {
                     another = ap[1];
                 } else if(ap[0].split("").length <= 3) {
                     another = ap[0];
+                } else if(ap[0].split("").length >= 8) {
+                    div = new MenuOperation(fileText, ap[0]).AssignOperation();
                 }
                 MenuOperation miMenu = new MenuOperation(fileText, ap[0]);
                 div = miMenu.AssignOperation();
@@ -159,6 +165,8 @@ public record Operator() {
                     another = ap[1];
                 } else if(ap[0].split("").length <=3) {
                     another = ap[0];
+                } else if(ap[0].split("").length >= 8) {
+                    rest = new MenuOperation(fileText, ap[0]).AssignOperation();
                 }
                 MenuOperation miMenu = new MenuOperation(fileText, ap[0]);
                 rest = miMenu.AssignOperation();
