@@ -7,6 +7,7 @@
 - [x] resolves expresions with 2 or more elements
 - [x] resolves expresions with priority
 - [x] resolves expresions with multiples operations
+- [x] resolves expresions whit the result of another cell to resolve current cell
 
 ## Example
 >- executes the normal math operations
@@ -44,13 +45,10 @@ Resultado rest :
 A3==12
 C4-A2==5
 A3-(C4-A2)==7
+
+Resultado by reference:
+A2==12
+D1 => A2+B2==22
+A3 = 1
+A2+(D1-A3)==33
 ```
-
-------
-
-## TODO's
-- [ ] integrate the functionality to use the result of the cell to compute another cell
->- EJM:
->>- `<C3>-<B1>-<=C3*B1>`
->>- `C3`: contains the operations: `<A1*B1>`
->>- in order to resolve the operation `C3*B1` wee need to have the result of `C3` first
