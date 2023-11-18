@@ -11,8 +11,12 @@ public record OperationUtils() {
                 value += new MenuOperation(fileText, another[1]).AssigOneOperation();
             }
         } else {
-            String operar = partitions.substring(0, partitions.length()-1);
-            value += new MenuOperation(fileText, operar).AssignOperation();
+            if(partitions.length() > 3) {
+                String operar = partitions.substring(0, partitions.length()-1);
+                value += new MenuOperation(fileText, operar).AssignOperation();
+            } else {
+                value += new MenuOperation(fileText, partitions).AssigOneOperation();
+            }
         }
         return value;
     }
@@ -26,8 +30,12 @@ public record OperationUtils() {
                 value *= new MenuOperation(fileText, another[1]).AssigOneOperation();
             }
         } else {
-            String operar = partitions.substring(0, partitions.length()-1);
-            value *= new MenuOperation(fileText, operar).AssignOperation();
+            if(partitions.length() > 3) {
+                String operar = partitions.substring(0, partitions.length()-1);
+                value *= new MenuOperation(fileText, operar).AssignOperation();
+            } else {
+                value *= new MenuOperation(fileText, partitions).AssignOperation();
+            }
         }
         return value;
     }
