@@ -43,7 +43,12 @@ public record Operator() {
                  String co = data[0];
                  int p= Integer.parseInt(data[1])-1;
                  String[] rows = getRowsOfColumn(fileText, "<" + co + ">").split("\n");
-                 sum += Integer.parseInt(rows[p].replaceAll("[<>]", ""));
+                 if(rows[p].contains("=")) {
+                     String operate = rows[p].replaceAll("[<>=]", "");
+                     sum += new MenuOperation(fileText, operate).AssignOperation();
+                 } else {
+                     sum += Integer.parseInt(rows[p].replaceAll("[<>]", ""));
+                 }
              }
          }
          result += sum;
@@ -64,7 +69,12 @@ public record Operator() {
                 String co = data[0];
                 int p = Integer.parseInt(data[1])-1;
                 String[] rows = getRowsOfColumn(fileText, "<" + co + ">").split("\n");
-                mult *= Integer.parseInt(rows[p].replaceAll("[<>]", ""));
+                if(rows[p].contains("=")) {
+                    String operate = rows[p].replaceAll("[<>=]", "");
+                    mult *= new MenuOperation(fileText, operate).AssignOperation();
+                } else {
+                    mult *= Integer.parseInt(rows[p].replaceAll("[<>]", ""));
+                }
             }
         }
         res = mult;
@@ -100,15 +110,20 @@ public record Operator() {
                 String co = data[0];
                 int p = Integer.parseInt(data[1])-1;
                 String[] rows = getRowsOfColumn(fileText, "<" + co + ">").split("\n");
-                if(sentences.length() > 3) {
-                    if(i == 0) {
-                        inicial = Integer.parseInt(rows[p].replaceAll("[<>]", ""));
-                    } else {
-                        div = inicial / Integer.parseInt(rows[p].replaceAll("[<>]", ""));
-                        inicial = Integer.parseInt(rows[p].replaceAll("[<>]", ""));
-                    }
+                if (rows[p].contains("=")) {
+                    String operate = rows[p].replaceAll("[<>=]", "");
+                    inicial = new MenuOperation(fileText, operate).AssignOperation();
                 } else {
-                    div = Integer.parseInt(rows[p].replaceAll("[<>]", ""));
+                    if(sentences.length() > 3) {
+                        if(i == 0) {
+                            inicial = Integer.parseInt(rows[p].replaceAll("[<>]", ""));
+                        } else {
+                            div = inicial / Integer.parseInt(rows[p].replaceAll("[<>]", ""));
+                            inicial = Integer.parseInt(rows[p].replaceAll("[<>]", ""));
+                        }
+                    } else {
+                        div = Integer.parseInt(rows[p].replaceAll("[<>]", ""));
+                    }
                 }
             }
         }
@@ -145,15 +160,20 @@ public record Operator() {
                 String co = data[0];
                 int p = Integer.parseInt(data[1])-1;
                 String[] rows = getRowsOfColumn(fileText, "<" + co + ">").split("\n");
-                if(sentences.length() > 3) {
-                    if(i == 0) {
-                        inicial = Integer.parseInt(rows[p].replaceAll("[<>]", ""));
-                    } else {
-                        rest = inicial - Integer.parseInt(rows[p].replaceAll("[<>]", ""));
-                        inicial = Integer.parseInt(rows[p].replaceAll("[<>]", ""));;
-                    }
+                if(rows[p].contains("=")) {
+                    String operate = rows[p].replaceAll("[<>=]", "");
+                    inicial = new MenuOperation(fileText, operate).AssignOperation();
                 } else {
-                    rest = Integer.parseInt(rows[p].replaceAll("[<>]", ""));;
+                    if(sentences.length() > 3) {
+                        if(i == 0) {
+                            inicial = Integer.parseInt(rows[p].replaceAll("[<>]", ""));
+                        } else {
+                            rest = inicial - Integer.parseInt(rows[p].replaceAll("[<>]", ""));
+                            inicial = Integer.parseInt(rows[p].replaceAll("[<>]", ""));;
+                        }
+                    } else {
+                        rest = Integer.parseInt(rows[p].replaceAll("[<>]", ""));;
+                    }
                 }
             }
         }

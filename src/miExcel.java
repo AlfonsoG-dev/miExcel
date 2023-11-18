@@ -52,27 +52,34 @@ class miExcel {
             String row = rows[rows.length-1].replaceAll("[<.>=]", "");
             String[] op = row.split("");
             for(int o=0; o<op.length; ++o) {
+                /*
                 if(op[o].matches("[*]")) {
                     System.out.print("Resultado mult :" + "\n");
                     Operator.Multiplicar(fileText, row);
+                    System.out.print("\n");
                     break;
                 }
                 if(op[o].matches("[\\/]")) {
                     System.out.print("Resultado div :" + "\n");
                     Operator.Dividir(fileText, row);
+                    System.out.print("\n");
                     break;
                 }
+                */
                 if(op[o].matches("[+]")) {
                     System.out.print("Resultado sum :" + "\n");
                     Operator.Sumar(fileText, row);
                     System.out.print("\n");
                     break;
                 }
+                /*
                 if(op[o].matches("[\\-]")) {
                     System.out.print("Resultado rest :" + "\n");
                     Operator.Restar(fileText, row);
+                    System.out.print("\n");
                     break;
                 }
+                */
             }
         }
         return operation;
