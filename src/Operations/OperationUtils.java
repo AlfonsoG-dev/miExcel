@@ -8,7 +8,7 @@ public record OperationUtils() {
                 value += new MenuOperation(fileText, another[0]).AssignOperation();
             }
             if(1 < another.length && another[1].length() > 3) {
-                String operar = partitions.substring(0, partitions.length()-1);
+                String operar = partitions.substring(1, partitions.length());
                 value += new MenuOperation(fileText, operar).AssignOperation();
             }
             if(1 < another.length && another[1].length() == 3) {
@@ -16,7 +16,7 @@ public record OperationUtils() {
             }
         } else {
             if(partitions.length() > 3) {
-                String operar = partitions.substring(0, partitions.length()-1);
+                String operar = partitions.substring(1, partitions.length());
                 value += new MenuOperation(fileText, operar).AssignOperation();
             } else {
                 value += new MenuOperation(fileText, partitions).AssigOneOperation();
@@ -32,7 +32,7 @@ public record OperationUtils() {
                 value *= new MenuOperation(fileText, another[0]).AssignOperation();
             }
             if(1 < another.length && another[1].length() > 3) {
-                String operar = partitions.substring(0, partitions.length()-1);
+                String operar = partitions.substring(1, partitions.length());
                 value *= new MenuOperation(fileText, operar).AssignOperation();
             }
             if(1 < another.length && another[1].length() == 3) {
