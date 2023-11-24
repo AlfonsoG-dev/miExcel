@@ -21,7 +21,7 @@ class miExcel {
             if(miFile.exists()) {
                 miBufferedReader = new BufferedReader(new FileReader(miFile.getCanonicalPath()));
                 while(miBufferedReader.read() != -1) {
-                    fileLines += miBufferedReader.readLine() + "\n";
+                    fileLines += miBufferedReader.readLine().replace(" ", "") + "\n";
                 }
             } else {
                 throw new Exception("file not found");
